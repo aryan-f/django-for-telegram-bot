@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_q',
+    'apps.bot',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +121,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Django-Q Configuration
+# https://django-q.readthedocs.io/en/latest/configure.html
+
+Q_CLUSTER = {
+    'workers': int(os.environ.get('DJANGO_Q_WORKERS')),
+    'redis': {
+        'host': os.environ.get('REDIS_HOST'),
+        'port': int(os.environ.get('REDIS_PORT')),
+        'db': int(os.environ.get('DJANGO_Q_REDIS_DB'))
+    }
+}
+
+# Python Telegram Bot Updater
+# https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.updater.html
+
+TELEGRAM_BOT = {
+    'token': os.environ.get('TELEGRAM_BOT_TOKEN'),
+    'workers': int(os.environ.get('TELEGRAM_BOT_WORKERS')),
+    'use_context': True,
+}
